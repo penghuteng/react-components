@@ -1,0 +1,8 @@
+node_modules
+dist
+extension
+stats.html
+
+.vscode
+.DS_Store
+.idea/
