@@ -18,9 +18,7 @@ export default defineConfig(({ command }) => ({
     emptyOutDir: false,
     sourcemap: isDev ? "inline" : false,
     rollupOptions: {
-      input: {
-        newtab: r("test/index.html"),
-      },
+      input: r("test/index.html"),
       output: {
         manualChunks: {},
       },

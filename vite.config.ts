@@ -3,7 +3,7 @@ import { isDev, r } from "./scripts/utils";
 import packageJson from "./package.json";
 
 export const sharedConfig: UserConfig = {
-  root: r("component"),
+  root: r("test"),
   resolve: {
     alias: {
       "@/component": `${r("component")}/`,

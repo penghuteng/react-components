@@ -17,7 +17,6 @@
   "scripts": {
     "clean": "rimraf --glob dist",
     "dev": "run-s dev:vite",
-    "dev:pre": "esno scripts/pre-dev.ts",
     "dev:vite": "vite --config test/vite.config.ts",
     "build": "run-s clean build:prepare build:vite",
     "build:prepare": "esno scripts/pre-build.ts",
