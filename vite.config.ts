@@ -1,6 +1,8 @@
 import { defineConfig, UserConfig } from "vite";
 import { isDev, r } from "./scripts/utils";
 import packageJson from "./package.json";
+import react from "@vitejs/plugin-react";
+import dts from "vite-plugin-dts";
 
 export const sharedConfig: UserConfig = {
   root: r("test"),
@@ -15,7 +17,7 @@ export const sharedConfig: UserConfig = {
   },
 };
 
-export default defineConfig(({
+export default defineConfig({
   ...sharedConfig,
   build: {
     watch: isDev ? {} : undefined,
@@ -25,14 +27,41 @@ export default defineConfig(({
     lib: {
       entry: r("components/index.ts"),
       name: packageJson.name,
-      formats: ["iife"],
     },
     rollupOptions: {
-      output: {
-        entryFileNames: "index.js",
-        extend: true,
-      },
+      external: ["react"],
+      output: [
+        {
+          entryFileNames: "index.js",
+          format: "es",
+          dir: r("es"),
+          extend: true,
+          globals: {
+            react: "React",
+          },
+        },
+        {
+          entryFileNames: "index.js",
+          format: "cjs",
+          dir: r("lib"),
+          extend: true,
+          globals: {
+            react: "React",
+          },
+        },
+        {
+          entryFileNames: "index.min.js",
+          format: "iife",
+          extend: true,
+          dir: "dist",
+          name: packageJson.name,
+          globals: {
+            react: "React",
+          },
+        },
+      ],
     },
     chunkSizeWarningLimit: 1000,
   },
-}));
+  plugins: [react(), dts({ include: [r("components")] })],
+});
